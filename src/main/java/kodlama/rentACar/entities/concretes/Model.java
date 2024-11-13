@@ -7,19 +7,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name="brands")
+@Entity
+@Table(name ="models")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor//NoargsConstractor da var parametresiz istiyorsak.!!
-@Entity //Sen bit veri tabanı 
-public class Brand {
-	
+@NoArgsConstructor
+public class Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //id otomatik 1 1 artıyor.
 	@Column(name="id")
@@ -28,8 +29,10 @@ public class Brand {
 	@Column(name="name")
 	 private String name;
  
-	@OneToMany(mappedBy = "brand")
-	 List<Model> models;
-
-
+	    @ManyToOne
+	    @JoinColumn(name = "brand_id")
+         private Brand brand;
+	    
+	    @OneToMany(mappedBy = "model")
+	    private List<Car> cars;
 }
